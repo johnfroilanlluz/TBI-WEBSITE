@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Modal from './Modal';
 import Login from './Login';
 import StartupForm from './StartupForm';
+import Dashboard from './Dashboard';
+import AdminDashboard from './AdminDashboard';
 
 export default function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isDashboardModalOpen, setIsDashboardModalOpen] = useState(false);
+  const [isAdminDashboardModalOpen, setIsAdminDashboardModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,8 +40,24 @@ export default function NavBar() {
     setIsApplyModalOpen(false);
   };
 
+  const openDashboardModal = () => {
+    setIsDashboardModalOpen(true);
+  };
+
+  const closeDashboardModal = () => {
+    setIsDashboardModalOpen(false);
+  };
+
+  const openAdminDashboardModal = () => {
+    setIsAdminDashboardModalOpen(true);
+  };
+
+  const closeAdminDashboardModal = () => {
+    setIsAdminDashboardModalOpen(false);
+  };
+
   return (
-    <div >
+    <div>
       <nav className={`fixed top-0 left-0 w-full transition-colors duration-300 ${isScrolled ? 'bg-neutral-white shadow-lg opacity-90' : 'bg-primary-blue'}`}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -92,13 +111,29 @@ export default function NavBar() {
 
       {isLoginModalOpen && (
         <Modal isOpen={isLoginModalOpen} onClose={closeLoginModal}>
-          <Login onClose={closeLoginModal} />
+          <Login 
+            onClose={closeLoginModal} 
+            onLoginSuccess={openDashboardModal} 
+            onAdminLoginSuccess={openAdminDashboardModal} 
+          />
         </Modal>
       )}
 
       {isApplyModalOpen && (
         <Modal isOpen={isApplyModalOpen} onClose={closeApplyModal}>
           <StartupForm onClose={closeApplyModal} />
+        </Modal>
+      )}
+
+      {isDashboardModalOpen && (
+        <Modal isOpen={isDashboardModalOpen} onClose={closeDashboardModal}>
+          <Dashboard onClose={closeDashboardModal} />
+        </Modal>
+      )}
+
+      {isAdminDashboardModalOpen && (
+        <Modal isOpen={isAdminDashboardModalOpen} onClose={closeAdminDashboardModal}>
+          <AdminDashboard onClose={closeAdminDashboardModal} />
         </Modal>
       )}
     </div>

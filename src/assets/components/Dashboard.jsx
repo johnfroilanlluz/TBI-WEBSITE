@@ -29,14 +29,14 @@ const Dashboard = () => {
       } catch (error) {
         console.error('Error fetching account:', error);
         setError('Error fetching account');
-      }
+      } 
     };
 
     fetchAccount();
   }, [token]);
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container relative min-h-screen z-16">
       <h2>Dashboard</h2>
       {error ? (
         <div className="error">{error}</div>

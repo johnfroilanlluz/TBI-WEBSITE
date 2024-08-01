@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './Loader';
 
-const Login = ({ onClose }) => {
+const Login = ({ onClose, onLoginSuccess, onAdminLoginSuccess }) => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,7 +34,11 @@ const Login = ({ onClose }) => {
           onClose: () => {
             setLoading(false);
             onClose();
-            navigate('/dashboard');
+            if (data.redirectTo === 'adminDashboard') {
+              onAdminLoginSuccess(); // Open Admin Dashboard modal
+            } else {
+              onLoginSuccess(); // Open regular Dashboard modal
+            }
           }
         });
       } else {
