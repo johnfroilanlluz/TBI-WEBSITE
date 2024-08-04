@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from './Modal';
+import Loader from './Loader';
 import '../css/AdminDashboard.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,6 +10,7 @@ const AdminDashboard = ({ onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadingState, setLoadingState] = useState({}); // To track loading state of each button
 
   const fetchApplications = async () => {
     const token = localStorage.getItem('token');
@@ -60,6 +62,7 @@ const AdminDashboard = ({ onClose }) => {
 
   const handleApprove = async (index) => {
     const application = applications[index];
+    setLoadingState(prevState => ({ ...prevState, [`approve-${index}`]: true }));
 
     try {
       const response = await fetch('https://tbic.azurewebsites.net/approve', {
@@ -82,11 +85,14 @@ const AdminDashboard = ({ onClose }) => {
     } catch (error) {
       console.error('Error approving application:', error);
       toast.error('An error occurred while approving application');
+    } finally {
+      setLoadingState(prevState => ({ ...prevState, [`approve-${index}`]: false }));
     }
   };
 
   const handleDisapprove = async (index) => {
     const application = applications[index];
+    setLoadingState(prevState => ({ ...prevState, [`disapprove-${index}`]: true }));
 
     try {
       const response = await fetch('https://tbic.azurewebsites.net/disapprove', {
@@ -109,12 +115,15 @@ const AdminDashboard = ({ onClose }) => {
     } catch (error) {
       console.error('Error disapproving application:', error);
       toast.error('An error occurred while disapproving application');
+    } finally {
+      setLoadingState(prevState => ({ ...prevState, [`disapprove-${index}`]: false }));
     }
   };
 
   const handlePrint = async (index) => {
     const token = localStorage.getItem('token');
     const application = applications[index];
+    setLoadingState(prevState => ({ ...prevState, [`print-${index}`]: true }));
 
     try {
       const response = await fetch(`https://tbic.azurewebsites.net/print?name=${application.name}`, {
@@ -139,6 +148,8 @@ const AdminDashboard = ({ onClose }) => {
     } catch (error) {
       console.error('Error generating print:', error);
       toast.error('An error occurred while generating print');
+    } finally {
+      setLoadingState(prevState => ({ ...prevState, [`print-${index}`]: false }));
     }
   };
 
@@ -208,20 +219,23 @@ const AdminDashboard = ({ onClose }) => {
                 <button
                   className="btn-approve"
                   onClick={() => handleApprove(index)}
+                  disabled={loadingState[`approve-${index}`]}
                 >
-                  Approve
+                  {loadingState[`approve-${index}`] ? <Loader /> : 'Approve'}
                 </button>
                 <button
                   className="btn-disapprove"
                   onClick={() => handleDisapprove(index)}
+                  disabled={loadingState[`disapprove-${index}`]}
                 >
-                  Disapprove
+                  {loadingState[`disapprove-${index}`] ? <Loader /> : 'Disapprove'}
                 </button>
                 <button
                   className="btn-print"
                   onClick={() => handlePrint(index)}
+                  disabled={loadingState[`print-${index}`]}
                 >
-                  Print
+                  {loadingState[`print-${index}`] ? <Loader /> : 'Print'}
                 </button>
               </td>
             </tr>

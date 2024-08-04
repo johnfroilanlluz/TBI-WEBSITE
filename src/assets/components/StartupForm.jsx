@@ -174,112 +174,122 @@ const StartupForm = ({ onClose }) => {
   };
 
   return (
-    <form className="form-container">
-      <h2 className="text-2xl font-bold mb-4">Startup Application Form</h2>
-      {loading && <Loader />}
-      <div className="form-group w-full">
-        <label className="block text-left text-lg">Startup Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          maxLength="20"
-          disabled={isFinalized}
-        />
-      </div>
-      <div className="form-group w-full">
-        <label className="block text-left text-lg">Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          maxLength="30"
-          disabled={isFinalized}
-        />
-      </div>
-      <div className="form-group w-full">
-        <label className="block text-left text-lg">Members and Roles:</label>
-        {formData.members.map((member, index) => (
-          <div key={index} className="member-group flex gap-4 mb-2">
-            <input
-              type="text"
-              name="name"
-              placeholder="Member Name"
-              value={member.name}
-              onChange={(e) => handleMemberChange(index, e)}
-              className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              disabled={isFinalized}
-            />
-            <input
-              type="text"
-              name="role"
-              placeholder="Role"
-              value={member.role}
-              onChange={(e) => handleMemberChange(index, e)}
-              className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              disabled={isFinalized}
-            />
-            {!isFinalized && (
-              <button
-                type="button"
-                onClick={() => removeMember(index)}
-                className="btn btn-remove bg-red-500 text-white rounded-lg px-4 py-2"
-              >
-                Remove
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4 sm:p-8">
+      <form className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md space-y-4 overflow-y-auto max-h-full">
+        <div className="flex justify-end">
+          <button
+            className="text-gray-500 hover:text-gray-700"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+        </div>
+        <h2 className="text-2xl font-bold mb-4 text-center">Startup Application Form</h2>
+        {loading && <Loader />}
+        <div className="form-group w-full">
+          <label className="block text-left text-lg">Startup Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            maxLength="20"
+            disabled={isFinalized}
+          />
+        </div>
+        <div className="form-group w-full">
+          <label className="block text-left text-lg">Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            maxLength="30"
+            disabled={isFinalized}
+          />
+        </div>
+        <div className="form-group w-full">
+          <label className="block text-left text-lg">Members and Roles:</label>
+          {formData.members.map((member, index) => (
+            <div key={index} className="member-group flex flex-col sm:flex-row gap-4 mb-2">
+              <input
+                type="text"
+                name="name"
+                placeholder="Member Name"
+                value={member.name}
+                onChange={(e) => handleMemberChange(index, e)}
+                className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled={isFinalized}
+              />
+              <input
+                type="text"
+                name="role"
+                placeholder="Role"
+                value={member.role}
+                onChange={(e) => handleMemberChange(index, e)}
+                className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled={isFinalized}
+              />
+              {!isFinalized && (
+                <button
+                  type="button"
+                  onClick={() => removeMember(index)}
+                  className="btn btn-remove bg-red-500 text-white rounded-lg px-4 py-2"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+          {!isFinalized && (
+            <button type="button" onClick={addMember} className="btn btn-add bg-green-500 text-white rounded-lg px-4 py-2 mt-2">
+              Add Member
+            </button>
+          )}
+        </div>
+        <div className="form-group w-full">
+          <label className="block text-left text-lg">Industry:</label>
+          <input
+            type="text"
+            name="industry"
+            value={formData.industry}
+            onChange={handleChange}
+            className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={isFinalized}
+          />
+        </div>
+        <div className="form-group w-full">
+          <label className="block text-left mb-2 text-lg">Brief Concept/Idea:</label>
+          <textarea
+            name="idea"
+            value={formData.idea}
+            onChange={handleChange}
+            className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            maxLength="800"
+            disabled={isFinalized}
+          />
+        </div>
+        <div className="form-group w-full flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0">
+          {!isFinalized ? (
+            <button type="button" onClick={handleFinalize} className="btn btn-finalize bg-blue-500 text-white rounded-lg px-4 py-2">
+              Finalize Application
+            </button>
+          ) : (
+            <>
+              <button type="button" onClick={handleSubmit} className="btn btn-submit bg-blue-500 text-white rounded-lg px-4 py-2">
+                Submit
               </button>
-            )}
-          </div>
-        ))}
-        {!isFinalized && (
-          <button type="button" onClick={addMember} className="btn btn-add bg-green-500 text-white rounded-lg px-4 py-2 mt-2">
-            Add Member
-          </button>
-        )}
-      </div>
-      <div className="form-group w-full">
-        <label className="block text-left text-lg">Industry:</label>
-        <input
-          type="text"
-          name="industry"
-          value={formData.industry}
-          onChange={handleChange}
-          className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          disabled={isFinalized}
-        />
-      </div>
-      <div className="form-group w-full">
-        <label className="block text-left mb-2 text-lg">Brief Concept/Idea:</label>
-        <textarea
-          name="idea"
-          value={formData.idea}
-          onChange={handleChange}
-          className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          maxLength="800"
-          disabled={isFinalized}
-        />
-      </div>
-      <div className="form-group w-full flex justify-between">
-        {!isFinalized ? (
-          <button type="button" onClick={handleFinalize} className="btn btn-finalize bg-blue-500 text-white rounded-lg px-4 py-2">
-            Finalize Application
-          </button>
-        ) : (
-          <>
-            <button type="button" onClick={handleSubmit} className="btn btn-submit bg-blue-500 text-white rounded-lg px-4 py-2">
-              Submit
-            </button>
-            <button type="button" onClick={handleClear} className="btn btn-clear bg-red-500 text-white rounded-lg px-4 py-2">
-              Clear
-            </button>
-          </>
-        )}
-      </div>
-      <ToastContainer />
-    </form>
+              <button type="button" onClick={handleClear} className="btn btn-clear bg-red-500 text-white rounded-lg px-4 py-2">
+                Clear
+              </button>
+            </>
+          )}
+        </div>
+        <ToastContainer />
+      </form>
+    </div>
   );
 };
 

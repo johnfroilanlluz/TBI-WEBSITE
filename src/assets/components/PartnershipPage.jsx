@@ -7,7 +7,7 @@ const partners = [
   },
   {
     name: 'DOST',
-    imgSrc: 'src/assets/images/dost.png', 
+    imgSrc: 'src/assets/images/dost.jpg', 
   },
   {
     name: 'PhilDev',
@@ -17,24 +17,23 @@ const partners = [
     name: 'Microsoft Learn',
     imgSrc: 'src/assets/images/microsoft.jpeg', 
   },
-  
 ];
 
 const PartnersSection = () => {
   return (
-    <section className=" bg-light-blue py-20">
-      <div className="relative z-15 container mx-auto text-center">
-        <h2 className="text-6xl font-bold mb-12 text-white">OUR PARTNERS</h2>
-        <div className="flex flex-wrap justify-center gap-12">
+    <section className="bg-light-blue py-20">
+      <div className="relative z-15 container mx-auto text-center px-4 sm:px-8 lg:px-16">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-12 text-white">OUR PARTNERS</h2>
+        <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
           {partners.map((partner) => (
             <div
               key={partner.name}
-              className="bg-white rounded-lg shadow-lg w-48 h-48 flex items-center justify-center"
+              className="bg-white rounded-full shadow-lg w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center"
             >
               <img
                 src={partner.imgSrc}
                 alt={partner.name}
-                className="max-w-full max-h-full"
+                className="w-28 h-28 sm:w-44 sm:h-44 rounded-full object-cover"
               />
             </div>
           ))}

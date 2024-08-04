@@ -25,14 +25,11 @@ const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div ref={modalRef} className="bg-white p-8 rounded-lg shadow-lg relative max-h-[95vh] overflow-y-auto w-1/2">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 sm:p-8">
+      <div ref={modalRef} className="bg-white p-8 rounded-lg shadow-lg relative w-full max-w-xs sm:max-w-md max-h-full overflow-y-auto">
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          onClick={() => {
-            console.log('Modal close button clicked');
-            onClose();
-          }}
+          onClick={onClose}
         >
           &times;
         </button>

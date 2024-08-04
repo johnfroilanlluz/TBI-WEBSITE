@@ -53,10 +53,10 @@ const Login = ({ onClose, onLoginSuccess, onAdminLoginSuccess }) => {
   };
 
   return (
-    <div className="relative z-50 min-h-screen flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4 sm:p-8">
       {loading && <Loader />}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-md mb-60">
-        <div className="p-8">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-xs sm:max-w-md">
+        <div className="p-6 sm:p-8">
           <div className="flex justify-end">
             <button
               className="text-gray-500 hover:text-gray-700"
