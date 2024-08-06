@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from './Modal';
 import Loader from './Loader';
-import '../css/AdminDashboard.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -177,87 +176,107 @@ const AdminDashboard = ({ onClose }) => {
   };
 
   return (
-    <div className="admin-dashboard">
-      <h2 className="centered-title">ADMIN DASHBOARD</h2>
-      <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Search applications..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-bar"
-        />
-        <button onClick={handleSearch} className="btn-search">Search</button>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4 sm:p-8">
+      <div className="w-full max-w-6xl bg-white p-6 rounded-lg shadow-md space-y-4 overflow-y-auto max-h-full">
+        <div className="flex justify-end">
+          <button
+            className="text-gray-500 hover:text-gray-700"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+        </div>
+        <h2 className="text-2xl font-bold mb-4 text-center">ADMIN DASHBOARD</h2>
+        <div className="flex justify-center items-center space-x-4 mb-4">
+          <input
+            type="text"
+            placeholder="Search applications..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button onClick={handleSearch} className="btn bg-blue-500 text-white rounded-lg px-4 py-2">
+            Search
+          </button>
+        </div>
+        {applications.length > 0 ? (
+          <div className="overflow-x-auto w-full">
+            <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th className="px-4 py-2">Name</th>
+                  <th className="px-4 py-2">Industry</th>
+                  <th className="px-4 py-2">Members</th>
+                  <th className="px-4 py-2">Idea</th>
+                  <th className="px-4 py-2">Status</th>
+                  <th className="px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {applications.map((application, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{application.name}</td>
+                    <td className="border px-4 py-2">{application.industry}</td>
+                    <td className="border px-4 py-2">
+                      <span
+                        className="cursor-pointer text-blue-500"
+                        onClick={() => handleShowMembers(application.id)}
+                      >
+                        {application.members.length}
+                      </span>
+                    </td>
+                    <td className="border px-4 py-2">{application.idea}</td>
+                    <td className="border px-4 py-2">{application.status}</td>
+                    <td className="border px-4 py-2 space-y-2">
+                      <button
+                        className="btn bg-green-500 text-white rounded-lg px-4 py-2 w-full"
+                        onClick={() => handleApprove(index)}
+                        disabled={loadingState[`approve-${index}`]}
+                      >
+                        {loadingState[`approve-${index}`] ? <Loader /> : 'Approve'}
+                      </button>
+                      <button
+                        className="btn bg-red-500 text-white rounded-lg px-4 py-2 w-full"
+                        onClick={() => handleDisapprove(index)}
+                        disabled={loadingState[`disapprove-${index}`]}
+                      >
+                        {loadingState[`disapprove-${index}`] ? <Loader /> : 'Disapprove'}
+                      </button>
+                      <button
+                        className="btn bg-blue-500 text-white rounded-lg px-4 py-2 w-full"
+                        onClick={() => handlePrint(index)}
+                        disabled={loadingState[`print-${index}`]}
+                      >
+                        {loadingState[`print-${index}`] ? <Loader /> : 'Print'}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center text-gray-500">No applications found</div>
+        )}
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          contentLabel="Members List"
+          className="modal"
+          overlayClassName="overlay"
+        >
+          <h3 className="text-xl font-bold mb-4">Members</h3>
+          <ul className="list-disc pl-5">
+            {selectedMembers.map((member, index) => (
+              <li key={index}>{member.name} ({member.role})</li>
+            ))}
+          </ul>
+          <button onClick={() => setIsModalOpen(false)} className="btn bg-blue-500 text-white rounded-lg px-4 py-2 mt-4">
+            Close
+          </button>
+        </Modal>
+        <ToastContainer />
       </div>
-      <table className="applications-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Industry</th>
-            <th>Members</th>
-            <th>Idea</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {applications.map((application, index) => (
-            <tr key={index}>
-              <td>{application.name}</td>
-              <td>{application.industry}</td>
-              <td>
-                <span
-                  className="member-count"
-                  onClick={() => handleShowMembers(application.id)}
-                >
-                  {application.members.length}
-                </span>
-              </td>
-              <td>{application.idea}</td>
-              <td>{application.status}</td>
-              <td>
-                <button
-                  className="btn-approve"
-                  onClick={() => handleApprove(index)}
-                  disabled={loadingState[`approve-${index}`]}
-                >
-                  {loadingState[`approve-${index}`] ? <Loader /> : 'Approve'}
-                </button>
-                <button
-                  className="btn-disapprove"
-                  onClick={() => handleDisapprove(index)}
-                  disabled={loadingState[`disapprove-${index}`]}
-                >
-                  {loadingState[`disapprove-${index}`] ? <Loader /> : 'Disapprove'}
-                </button>
-                <button
-                  className="btn-print"
-                  onClick={() => handlePrint(index)}
-                  disabled={loadingState[`print-${index}`]}
-                >
-                  {loadingState[`print-${index}`] ? <Loader /> : 'Print'}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        contentLabel="Members List"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <h3>Members</h3>
-        <ul>
-          {selectedMembers.map((member, index) => (
-            <li key={index}>{member.name} ({member.role})</li>
-          ))}
-        </ul>
-        <button onClick={() => setIsModalOpen(false)}>Close</button>
-      </Modal>
-      <ToastContainer />
     </div>
   );
 };

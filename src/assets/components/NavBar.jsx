@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-scroll';
 import Modal from './Modal';
 import Login from './Login';
 import StartupForm from './StartupForm';
@@ -63,28 +64,30 @@ export default function NavBar() {
 
   return (
     <div>
-      <nav className={`fixed top-0 left-0 w-full transition-colors duration-300 ${isScrolled ? 'bg-neutral-white shadow-lg opacity-90' : 'bg-primary-blue'} z-20`}>
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="src/assets/images/pup-pylon-2.png" className="w-16 h-auto" alt="Pup Pylon Images" />
-            <span className={`self-center text-xl font-bold whitespace-nowrap ${isScrolled ? 'text-red-800' : 'text-primary-gold'}`}>
-              <div className='flex flex-col w-36'> 
-                <span className=''>PUP TBI </span>
-                <span className='text-right'>PYLON HUB</span>
-              </div>
-            </span>
-          </a>
+      <nav className={`fixed top-0 left-0 w-full transition-colors duration-300 ${isScrolled ? 'bg-neutral-white shadow-lg opacity-90' : 'bg-custom-darkgreen'} z-20`}>
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 ">
+          <div>
+            <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+              <img src="src/assets/images/final-logo.png" className="w-16 h-auto" alt="Pup Pylon Images" />
+              <span className={`self-centerwhitespace-nowrap`}>
+                <div className='flex flex-col w-46 gap-0'> 
+                  <span className={`mb-[-10px] ${isScrolled ? 'text-custom-darkgreen' : 'text-white'}`}>TECHNOLOGY BUSINESS INCUBATION </span>
+                  <span className={`text-4xl font-bold ${isScrolled ? 'text-custom-maroon' : 'text-custom-yellow'}`}>PUP PYLON HUB</span>
+                </div>
+              </span>
+            </a>
+          </div>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse gap-2">
             <button
               type="button"
-              className={`text-neutral-white ${isScrolled ? 'bg-primary-blue' : 'bg-primary-gold'} hover:bg-primary-gold-dark focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center shadow-md`}
+              className={`text-neutral-white ${isScrolled ? 'bg-custom-maroon' : 'bg-custom-yellow'} hover:bg-primary-gold-dark focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center shadow-md`}
               onClick={openLoginModal}
             >
               VIEW STATUS
             </button>
             <button
               type="button"
-              className={`text-neutral-white ${isScrolled ? 'bg-primary-blue' : 'bg-primary-gold'} hover:bg-primary-gold-dark focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center`}
+              className={`text-neutral-white ${isScrolled ? 'bg-custom-maroon' : 'bg-custom-yellow'} hover:bg-primary-gold-dark focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center`}
               onClick={openApplyModal}
             >
               APPLY
@@ -103,26 +106,26 @@ export default function NavBar() {
             </button>
           </div>
           <div className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMenuOpen ? '' : 'hidden'}`} id="navbar-sticky">
-            <ul className={`flex flex-col font-medium p-4 md:p-0 mt-4 border md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ${isScrolled ? 'text-primary-blue' : 'text-neutral-white'}`}>
+            <ul className={`flex flex-col font-medium p-4 md:p-0 mt-4 border md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ${isScrolled ? 'text-custom-darkgreen' : 'text-neutral-white'}`}>
               <li className="nav-item">
-                <a href="#home" className="nav-link block py-2 px-3 md:p-0 transition-colors duration-300" aria-current="page">
-                  Home
-                </a>
+                <Link to="home" className="nav-link block py-2 px-3 md:p-0 transition-colors duration-300" smooth={true} duration={500}>
+                 <a href="">Home</a> 
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="#program" className="nav-link block py-2 px-3 md:p-0 transition-colors duration-300">
-                  Program
-                </a>
+                <Link to="program" className="nav-link block py-2 px-3 md:p-0 transition-colors duration-300" smooth={true} duration={500}>
+                <a href="">Program</a> 
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="#about" className="nav-link block py-2 px-3 md:p-0 transition-colors duration-300">
-                  About
-                </a>
+                <Link to="about" className="nav-link block py-2 px-3 md:p-0 transition-colors duration={300}" smooth={true} duration={500}>
+                <a href="">About</a> 
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="#contact" className="nav-link block py-2 px-3 md:p-0 transition-colors duration-300">
-                  Contact
-                </a>
+                <Link to="contact" className="nav-link block py-2 px-3 md:p-0 transition-colors duration={300}" smooth={true} duration={500}>
+                <a href="">Contact</a> 
+                </Link>
               </li>
             </ul>
           </div>

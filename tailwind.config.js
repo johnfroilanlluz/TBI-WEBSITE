@@ -16,8 +16,9 @@ export default {
         'neutral-gray': '#B5B5B5',
         'dark-blue': '#0d1b2a',
         'light-blue': '#1d4ed8',
-        'custom-yellow': '#FFD700', // Gold-like yellow
-        'custom-maroon': '#800000', // Maroon
+        'custom-yellow': '#faae1c', // Gold-like yellow
+        'custom-maroon': '#810e13', // Maroon
+        'custom-darkgreen': '#003d60', // Maroon
       },
       keyframes: {
         fadeIn: {

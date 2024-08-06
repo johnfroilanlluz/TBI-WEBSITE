@@ -22,7 +22,7 @@ const ParticleBackground = (props) => {
   "autoPlay": true,
   "background": {
     "color": {
-      "value": "#1E2F97"
+      "value": "#003d60"
     },
     "image": "",
     "position": "",

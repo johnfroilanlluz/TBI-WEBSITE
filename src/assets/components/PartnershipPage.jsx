@@ -28,12 +28,12 @@ const PartnersSection = () => {
           {partners.map((partner) => (
             <div
               key={partner.name}
-              className="bg-white rounded-full shadow-lg w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center"
+              className="bg-white rounded-3xl shadow-lg w-32 h-32 sm:w-48 sm:h-48 flex items-center justify-center"
             >
               <img
                 src={partner.imgSrc}
                 alt={partner.name}
-                className="w-28 h-28 sm:w-44 sm:h-44 rounded-full object-cover"
+                className="w-28 h-28 sm:w-44 sm:h-44 rounded-3xl object-cover"
               />
             </div>
           ))}

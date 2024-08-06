@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { Link, Element, animateScroll as scroll } from 'react-scroll';
 import NavBar from './assets/components/NavBar';
 import LandingPage from './assets/components/LandingPage';
 import WhatWeDo from './assets/components/WhatWeDo';
-import Login from './assets/components/Login';
-import Dashboard from './assets/components/Dashboard';
 import AboutUs from './assets/components/AboutUs';
 import FooterPage from './assets/components/FooterPage';
 import PartnersSection from './assets/components/PartnershipPage';
@@ -41,30 +40,20 @@ function App() {
     <Router>
       <ScrollToTop />
       <main className="min-h-screen flex flex-col text-sm sm:text-base overflow-hidden bg-blue-700">
-        <section id="home" className="z-10">
-          <NavBar openModal={openModal} />
-        </section>
-        <section id="home">
-          <LandingPage />
-        </section>
-        <section id="program">
+        <NavBar />
+        <Element name="home">
+          <LandingPage openApplyModal={openModal} />
+        </Element>
+        <Element name="whatWeDo">
           <WhatWeDo />
-        </section>
-        <section id="about">
+        </Element>
+        <Element name="aboutUs">
           <AboutUs />
-        </section>
-        <section id="partners">
+        </Element>
+        <Element name="partnersSection">
           <PartnersSection />
-        </section>
-        <section>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </section>
-        <section id="contact">
-          <FooterPage />
-        </section>
+        </Element>
+        <FooterPage />
       </main>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <StartupForm />

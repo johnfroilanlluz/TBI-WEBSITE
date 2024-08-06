@@ -59,7 +59,7 @@ const Login = ({ onClose, onLoginSuccess, onAdminLoginSuccess }) => {
         <div className="p-6 sm:p-8">
           <div className="flex justify-end">
             <button
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 text-4xl"
               onClick={onClose}
             >
               &times;
